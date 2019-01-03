@@ -123,7 +123,11 @@ app.use(
           .save()
           .then(result => {
             //_doc is provided by mongoose, it leaves out meta data
-            createdEvent = { ...result._doc, _id: result._doc._id.toString() };
+            createdEvent = {
+              ...result._doc,
+              _id: result._doc._id.toString(),
+              creator: user.bind(this, result._doc.creator)
+            };
             return User.findById("5c2c0a11d91ce34987f3de40");
           })
           .then(user => {
