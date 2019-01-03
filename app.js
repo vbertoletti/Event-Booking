@@ -11,11 +11,31 @@ const app = express();
 
 app.use(bodyParser.json());
 
-//.populate('creator') is a method provided by mongoose that populates any relations that it knows, so for example GraphQL returns the email from the user. However it can be replaced by: 
+const events = eventIds => {
+  return Event.find({ _id: { $in: eventIds } })
+    .then(events => {
+      return events.map(event => {
+        return {
+          ...event._doc,
+          _id: event.id,
+          creator: user.bind(this, event.creator)
+        };
+      });
+    })
+    .catch(err => {
+      throw err;
+    });
+};
+
+//.populate('creator') is a method provided by mongoose that populates any relations that it knows, so for example GraphQL returns the email from the user. However it can be replaced by the following function:
 const user = userId => {
   return User.findById(userId)
     .then(user => {
-      return { ...user._doc, _id: user.id };
+      return {
+        ...user._doc,
+        _id: user.id,
+        createdEvents: events.bind(this, user._doc.createdEvents)
+      };
     })
     .catch(err => {
       throw err;
