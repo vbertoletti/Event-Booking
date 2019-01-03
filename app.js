@@ -11,6 +11,17 @@ const app = express();
 
 app.use(bodyParser.json());
 
+//.populate('creator') is a method provided by mongoose that populates any relations that it knows, so for example GraphQL returns the email from the user. However it can be replaced by: 
+const user = userId => {
+  return User.findById(userId)
+    .then(user => {
+      return { ...user._doc, _id: user.id };
+    })
+    .catch(err => {
+      throw err;
+    });
+};
+
 app.use(
   "/graphql",
   graphqlHttp({
@@ -21,12 +32,14 @@ app.use(
         description: String!
         price: Float!
         date: String!
+        creator: User!
       }
 
       type User {
         _id: ID!
         email: String!
         password: String
+        createdEvents: [Event!]
       }
 
       input EventInput {
@@ -62,7 +75,11 @@ app.use(
           .then(events => {
             return events.map(event => {
               //I need to transform the _id into a string to solve graphql error. Mongoose allows me to use only event.id - this also works fine.
-              return { ...event._doc, _id: event._doc._id.toString() };
+              return {
+                ...event._doc,
+                _id: event._doc._id.toString(),
+                creator: user.bind(this, event._doc.creator)
+              };
             });
           })
           .catch(err => {
