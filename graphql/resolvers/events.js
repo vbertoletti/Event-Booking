@@ -1,5 +1,6 @@
 const { dateToString } = require("../../helpers/date.js");
 const Event = require("../../models/event.js");
+const User = require("../../models/user.js");
 const { transformEvent } = require("./merge");
 
 module.exports = {
@@ -16,14 +17,18 @@ module.exports = {
   },
 
   //this will take in the args passed when creating the schema.
-  createEvent: async args => {
+  createEvent: async (args, req) => {
+    if (!req.isAuth) {
+      throw new Error("User is not authorized to create event");
+    }
+
     const event = new Event({
       title: args.eventInput.title,
       description: args.eventInput.description,
       price: +args.eventInput.price,
       date: dateToString(args.eventInput.date),
       //mongoose will store automatically an objectId, only need to pass in a string:
-      creator: "5c2c0a11d91ce34987f3de40"
+      creator: req.userId
     });
 
     let createdEvent;
@@ -33,7 +38,7 @@ module.exports = {
       const result = await event.save();
       //_doc is provided by mongoose, it leaves out meta data
       createdEvent = transformEvent(result);
-      const creator = await User.findById("5c2c0a11d91ce34987f3de40");
+      const creator = await User.findById(req.userId);
 
       if (!creator) {
         throw new Error("User not found.");
