@@ -1,0 +1,43 @@
+.main-nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 3.5rem;
+  background-color: darksalmon;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.main-nav-logo h1 {
+  margin: 0;
+  font-size: 1, 5rem;
+}
+
+.main-nav-items {
+  margin-left: 1.5rem;
+}
+
+.main-nav-items ul {
+  display: flex;
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav-items li {
+  margin: 0 1rem;
+}
+
+.main-nav-items a {
+  text-decoration: none;
+  color: white;
+}
+
+.main-nav-items a:hover,
+.main-nav-items a:active,
+.main-nav-items a.active {
+  color: black;
+}
