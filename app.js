@@ -10,6 +10,19 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+  //allows a web service to specify that it's OK for it to be invoked from any domain
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  //browser sends an OPTIONS request before sending POST
+  res.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 app.use(isAuth);
 
 app.use(
@@ -29,7 +42,7 @@ mongoose
     }@cluster0-uagfb.mongodb.net/${process.env.MONGO_DB}?retryWrites=true`
   )
   .then(() => {
-    app.listen(3000);
+    app.listen(8000);
   })
   .catch(err => {
     console.log(err);
