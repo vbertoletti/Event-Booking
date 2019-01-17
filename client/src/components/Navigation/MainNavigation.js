@@ -13,7 +13,7 @@ const MainNavigation = props => (
           </div>
           <nav className="main-nav-items">
             <ul>
-              {context.token && (
+              {!context.token && (
                 <li>
                   <NavLink to="/auth">Login</NavLink>
                 </li>
@@ -21,9 +21,11 @@ const MainNavigation = props => (
               <li>
                 <NavLink to="/events">Events</NavLink>
               </li>
-              <li>
-                <NavLink to="/bookings">Bookings</NavLink>
-              </li>
+              {context.token && (
+                <li>
+                  <NavLink to="/bookings">Bookings</NavLink>
+                </li>
+              )}
             </ul>
           </nav>
         </header>
