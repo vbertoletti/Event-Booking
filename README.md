@@ -12,6 +12,6 @@ Non logged in users can see all events but cannot interact with the system witho
 `Front End:` React.js
 `Back End:` GraphQL API, Node.js and Express Server and Mongo Database.
 
-## Author 🦹‍:
+## Author 🦹‍
 
 Vanessa Bertoletti  
