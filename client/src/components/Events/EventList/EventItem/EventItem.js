@@ -9,8 +9,11 @@ const EventItem = props => {
         <h2 className="event-item-price">$19.99</h2>
       </div>
       <div>
-        <button className='btn'>View Details</button>
-        <p className="event-owner">You are the owner of this event</p>
+        {props.userId === props.creatorId ? (
+          <button className="btn">View Details</button>
+        ) : (
+          <p className="event-owner">You are the owner of this event</p>
+        )}
       </div>
     </li>
   );
