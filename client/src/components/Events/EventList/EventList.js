@@ -5,7 +5,12 @@ import "./EventList.css";
 const EventList = props => {
   const events = props.events.map(event => {
     return (
-      <EventItem key={event._id} event={event} authUserId={props.authUserId} />
+      <EventItem
+        key={event._id}
+        event={event}
+        authUserId={props.authUserId}
+        onDetail={props.onViewDetails}
+      />
     );
   });
 
