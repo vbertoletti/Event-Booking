@@ -5,11 +5,13 @@ const EventItem = props => {
   return (
     <li key={props._id} className="events-list-item">
       <div>
-        <h1 className="event-item-title">{props.title}</h1>
-        <h2 className="event-item-price">$19.99</h2>
+        <h1 className="event-item-title">{props.event.title}</h1>
+        <h2 className="event-item-price">
+          ${props.event.price} - {new Date(props.event.date).toLocaleDateString()}
+        </h2>
       </div>
       <div>
-        {props.userId === props.creatorId ? (
+        {props.authUserId !== props.event.creator._id ? (
           <button className="btn">View Details</button>
         ) : (
           <p className="event-owner">You are the owner of this event</p>
