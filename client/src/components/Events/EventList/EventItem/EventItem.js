@@ -2,13 +2,12 @@ import React from "react";
 import "./EventItem.css";
 
 const EventItem = props => {
-  console.log(props);
   return (
     <li key={props._id} className="events-list-item">
       <div>
         <h1 className="event-item-title">{props.event.title}</h1>
         <h2 className="event-item-price">
-          ${props.event.price} -{" "}
+          ${props.event.price} -
           {new Date(props.event.date).toLocaleDateString()}
         </h2>
       </div>
