@@ -8,7 +8,7 @@ module.exports = {
       throw new Error("User is not authorized to create event");
     }
     try {
-      const bookings = await Booking.find();
+      const bookings = await Booking.find({user: req.userId});
       return bookings.map(booking => {
         return transformBooking(booking);
       });
